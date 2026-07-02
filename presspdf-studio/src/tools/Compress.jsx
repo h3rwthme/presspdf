@@ -72,7 +72,7 @@ export default function Compress({ shell: Shell, tool, onBack }) {
         </div>
       )}
       <div className="note"><Icon name="info" size={16} />
-        Kompresi me-render ulang halaman jadi gambar — sangat efektif untuk scan &amp; nota, tapi teks jadi tidak bisa diseleksi. Alat lain (gabung, pisah, putar) mempertahankan PDF asli 100%.
+        Halaman di-render ulang sebagai gambar — teks hasil kompresi tidak bisa diseleksi.
       </div>
     </Shell>
   )

@@ -83,7 +83,7 @@ export default function WatermarkRemove({ shell: Shell, tool, onBack }) {
     setCanUndo(true)
 
     await progress('Mengisi ulang area watermark…', 40)
-    inpaint(base, flags, count > 40000 ? 120 : 80)
+    inpaint(base, flags)
     await progress('Menghaluskan sambungan…', 85)
     clearMask()
     await progress('Watermark dihilangkan.', 100)
@@ -143,9 +143,6 @@ export default function WatermarkRemove({ shell: Shell, tool, onBack }) {
           </>
         )}
 
-      <div className="note"><Icon name="info" size={16} />
-        Tandai persis di atas watermark, lalu tekan <b>Hilangkan</b>. Area ditutup dengan menyalin tekstur sekitarnya — hasil terbaik untuk watermark tipis di atas latar yang cukup seragam. Ulangi beberapa kali untuk watermark tebal.
-      </div>
     </Shell>
   )
 }

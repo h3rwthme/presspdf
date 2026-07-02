@@ -1,17 +1,22 @@
 import { useRef, useState } from 'react'
 import Icon from './Icon'
 
-// accept: 'pdf' | 'image' | raw mime string. Filters dropped/selected files accordingly.
-const MATCHERS = {
-  pdf: (f) => f.type === 'application/pdf' || /\.pdf$/i.test(f.name),
-  image: (f) => /^image\/(jpeg|png|webp|bmp)$/.test(f.type) || /\.(jpe?g|png|webp|bmp)$/i.test(f.name),
+// accept: named type set — each entry defines both the file filter and the
+// native <input accept> attribute, so drop & picker behave identically.
+const TYPES = {
+  pdf:   { test: (f) => f.type === 'application/pdf' || /\.pdf$/i.test(f.name), attr: 'application/pdf,.pdf' },
+  image: { test: (f) => /^image\/(jpeg|png|webp|bmp)$/.test(f.type) || /\.(jpe?g|png|webp|bmp)$/i.test(f.name), attr: 'image/*' },
+  word:  { test: (f) => /\.(docx|txt)$/i.test(f.name), attr: '.docx,.txt' },
+  sheet: { test: (f) => /\.(xlsx|csv|tsv)$/i.test(f.name), attr: '.xlsx,.csv,.tsv' },
+  ppt:   { test: (f) => /\.pptx$/i.test(f.name), attr: '.pptx' },
 }
 
 export default function Dropzone({ onFiles, multiple = true, accept = 'pdf', label, hint }) {
   const inputRef = useRef(null)
   const [over, setOver] = useState(false)
-  const match = MATCHERS[accept] || (() => true)
-  const acceptAttr = accept === 'pdf' ? 'application/pdf' : accept === 'image' ? 'image/*' : accept
+  const type = TYPES[accept] || { test: () => true, attr: undefined }
+  const match = type.test
+  const acceptAttr = type.attr
 
   const pick = (list) => {
     const files = [...list].filter(match)

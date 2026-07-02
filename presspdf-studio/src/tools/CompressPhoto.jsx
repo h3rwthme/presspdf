@@ -97,9 +97,6 @@ export default function CompressPhoto({ shell: Shell, tool, onBack }) {
         </div>
       )}
 
-      <div className="note"><Icon name="info" size={16} />
-        WebP biasanya paling hemat untuk foto web. PNG dipertahankan tanpa kompresi lossy, jadi cocok untuk gambar dengan transparansi atau garis tajam.
-      </div>
     </Shell>
   )
 }

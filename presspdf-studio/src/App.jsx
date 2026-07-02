@@ -49,7 +49,10 @@ function Header({ theme, toggleTheme, query, setQuery, onHome, showSearch }) {
         <button className="icon-btn" onClick={toggleTheme} aria-label="Ganti tema" title="Terang / Gelap">
           <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
         </button>
-        <a className="icon-btn ghlink" href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub" title="Kode sumber">
+        <a className="icon-btn ghlink" href="https://instagram.com/h3rwthme" target="_blank" rel="noreferrer" aria-label="Instagram" title="@h3rwthme">
+          <Icon name="instagram" size={18} />
+        </a>
+        <a className="icon-btn ghlink" href="https://github.com/h3rwthme" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub @h3rwthme">
           <Icon name="github" size={18} />
         </a>
       </div>
@@ -72,10 +75,7 @@ function Home({ query, setQuery, cat, setCat, onOpen }) {
       <section className="hero">
         <span className="eyebrow"><Icon name="shield" size={14} /> 100% diproses di perangkatmu</span>
         <h1>Semua alat <span className="grad">PDF &amp; Foto</span><br />dalam satu studio.</h1>
-        <p>
-          Gabung, kompres, konversi, hingga hapus latar dan watermark — cepat, privat, tanpa upload.
-          Tidak ada server, tidak ada antrean, tetap jalan saat offline.
-        </p>
+        <p>Gabung, kompres, konversi, edit — cepat, privat, tanpa upload.</p>
         <div className="trust">
           <span><Icon name="wifi" size={15} /> Jalan offline</span>
           <span><Icon name="zap" size={15} /> Tanpa antrean</span>
@@ -98,7 +98,7 @@ function Home({ query, setQuery, cat, setCat, onOpen }) {
       {shownCats.length === 0 && (
         <div className="empty">
           <Icon name="search" size={40} strokeWidth={1.4} />
-          <p>Tidak ada alat yang cocok dengan “{query}”.</p>
+          <p>Tidak ada alat yang cocok dengan "{query}".</p>
           <button className="cta ghost" style={{ marginTop: 14 }} onClick={() => { setQuery(''); setCat('all') }}>Reset pencarian</button>
         </div>
       )}
@@ -138,22 +138,14 @@ function ToolView({ tool, onBack }) {
 }
 
 function SiteFooter() {
-  const items = [
-    { icon: 'shield', h: 'Privat by design', p: 'File diproses di memori browser dan hilang begitu tab ditutup. Tidak ada yang dikirim ke server.' },
-    { icon: 'wifi', h: 'Siap offline', p: 'Setelah dimuat, seluruh alat bisa dipakai tanpa internet — cocok dijadikan aplikasi (Add to Home Screen).' },
-    { icon: 'zap', h: 'Ringan & cepat', p: 'Dibangun dengan React + Vite, pdf-lib, dan pdf.js. Bisa dibungkus jadi app desktop lewat Tauri.' },
-  ]
   return (
     <footer className="site-foot">
-      <div className="foot-grid">
-        {items.map((it) => (
-          <div className="foot-card" key={it.h}>
-            <Icon name={it.icon} size={20} />
-            <div><h4>{it.h}</h4><p>{it.p}</p></div>
-          </div>
-        ))}
+      <div className="foot-legal">
+        <span>© {new Date().getFullYear()} PressPDF Studio — alat PDF &amp; foto yang menghormati privasimu.</span>
+        <a className="foot-credit" href="https://instagram.com/h3rwthme" target="_blank" rel="noreferrer">
+          <Icon name="instagram" size={13} /> h3rwthme
+        </a>
       </div>
-      <div className="foot-legal">© {new Date().getFullYear()} PressPDF Studio — alat PDF &amp; foto yang menghormati privasimu.</div>
     </footer>
   )
 }
