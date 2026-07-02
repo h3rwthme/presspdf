@@ -1,86 +1,96 @@
 # PressPDF Studio
 
-Studio alat **PDF & Foto** ala iLovePDF — **semua proses 100% di perangkatmu**
-(browser/desktop), tidak ada file yang di-upload ke server mana pun. Antarmuka
-minimalis dengan ikon garis (tanpa emoji), mode terang/gelap, animasi halus, dan
-responsif sampai layar ~5,8 inci.
+[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![pdf-lib](https://img.shields.io/badge/pdf-lib-1.17.1-FF6B6B)](https://pdf-lib.js.org/)
+[![pdf.js](https://img.shields.io/badge/pdf.js-3.11.174-4B8BBE)](https://mozilla.github.io/pdf.js/)
+[![JSZip](https://img.shields.io/badge/JSZip-3.10.1-5E8C5D)](https://stuk.github.io/jszip/)
 
-## Alat yang tersedia
+PressPDF Studio adalah aplikasi web modern untuk mengolah PDF dan foto secara privat langsung di browser. Semua proses berjalan di perangkat Anda, tanpa upload ke server, sehingga cocok untuk kebutuhan harian yang cepat, aman, dan ringan.
 
-| Kategori | Alat |
-|---|---|
-| Atur PDF | Gabungkan, Pisahkan (rentang / per halaman → ZIP), Hapus Halaman, Ekstrak Halaman |
-| Optimalkan | Kompres PDF (3 tingkat: Ringan / Rekomendasi / Ekstrem) |
-| Konversi | PDF → JPG (Normal/Tinggi/Ultra, ZIP multi-halaman), JPG/PNG/WebP → PDF (ukuran gambar atau A4 + orientasi) |
-| Edit PDF | Putar PDF, Tanda Air (diagonal / ubin, warna & transparansi), Nomor Halaman (6 posisi, nomor awal) |
-| **Foto** | **Hapus Latar** (otomatis + kuas), **Perjelas HD** (perbesar 2×/4× + pertajam), **Kompres Foto** (JPG/WebP/PNG), **Hapus Watermark** (kuas + isi ulang) |
+## ✨ Fitur utama
 
-Semua alat foto berjalan murni di `<canvas>` — tanpa server, tanpa model AI berat,
-jadi tetap cepat dan privat serta bisa dipakai offline.
+### Atur PDF
+- Gabungkan beberapa PDF menjadi satu file
+- Pisahkan PDF per halaman atau rentang halaman
+- Hapus halaman tertentu
+- Ekstrak halaman pilihan
 
-Stack: **React + Vite**, `pdf-lib` (struktur PDF), `pdfjs-dist` (render halaman),
-`jszip`, plus pipeline gambar sendiri di `src/lib/image.js`
-(resize bertingkat, unsharp mask, denoise, flood-fill background removal, inpaint).
+### Optimasi dan Konversi
+- Kompres PDF dengan beberapa tingkat kualitas
+- Konversi PDF ke JPG
+- Konversi JPG/PNG/WebP ke PDF
 
-> Catatan kompresi: teknik yang dipakai adalah render-ulang halaman ke JPEG (seperti mode
-> "extreme" layanan online). Sangat efektif untuk scan/nota, tapi teks hasil kompresi
-> tidak bisa di-select lagi. Alat lain (gabung, pisah, putar, dll.) mempertahankan PDF asli 100%.
+### Edit PDF
+- Putar halaman PDF
+- Tambahkan watermark teks
+- Sisipkan nomor halaman
 
-## Jalankan lokal (development)
+### Alat Foto
+- Hapus latar/background secara otomatis
+- Perjelas dan tingkatkan kualitas foto HD
+- Kompres foto tanpa ribet
+- Hapus watermark dari gambar
+
+## 🧰 Teknologi yang dipakai
+
+- React 18 untuk UI interaktif
+- Vite untuk development dan build cepat
+- pdf-lib untuk manipulasi struktur PDF
+- pdf.js untuk render halaman PDF
+- JSZip untuk mengompres hasil multi-file
+- Canvas-based image pipeline untuk editing foto lokal
+
+## 📁 Struktur project
+
+```text
+src/
+  components/      # UI reusable
+  lib/             # helper PDF, image, theme, utility
+  tools/           # semua tool yang tersedia
+  App.jsx          # entry utama aplikasi
+```
+
+## ▶️ Cara menjalankan
 
 ```bash
 npm install
-npm run dev        # buka http://localhost:5173
+npm run dev
 ```
 
-## Deploy ke GitHub Pages
+Setelah itu, buka browser ke:
 
-**Cara otomatis (disarankan):**
-1. Buat repo baru di GitHub, push seluruh folder ini ke branch `main`.
-2. Di repo: **Settings → Pages → Source: GitHub Actions**.
-3. Selesai — setiap push ke `main`, workflow `.github/workflows/deploy.yml`
-   akan build & publish. URL-nya: `https://<username>.github.io/<nama-repo>/`
+```text
+http://localhost:5173
+```
 
-**Cara manual:**
+## 🏗️ Build untuk produksi
+
 ```bash
 npm run build
-npm run deploy     # pakai paket gh-pages, push folder dist ke branch gh-pages
 ```
-Lalu di Settings → Pages pilih branch `gh-pages`.
 
-`vite.config.js` sudah memakai `base: './'`, jadi aman di subpath repo mana pun
-tanpa perlu diubah-ubah.
+Hasil build akan muncul di folder `dist/`.
 
-## Jadikan aplikasi desktop native (Tauri — disarankan)
-
-Tauri menghasilkan `.exe` / `.dmg` / `.AppImage` kecil (±5–10 MB) dan cepat.
-Butuh Rust terpasang (https://rustup.rs).
+## 🚀 Deploy ke GitHub Pages
 
 ```bash
-npm install -D @tauri-apps/cli
-npx tauri init
-# saat ditanya:
-#   dev server URL     : http://localhost:5173
-#   frontend dist path : ../dist
-#   dev command        : npm run dev
-#   build command      : npm run build
-
-npx tauri dev      # jalankan sebagai app desktop (mode dev)
-npx tauri build    # hasilkan installer di src-tauri/target/release/bundle/
+npm run build
+npm run deploy
 ```
 
-Alternatif: Electron juga bisa (lebih berat, ±80 MB+), tapi untuk app seperti ini
-Tauri jauh lebih efisien.
+Pastikan GitHub Pages sudah dikonfigurasi agar membaca folder `dist` dari branch `gh-pages`.
 
-## Mobile
+## 🔒 Privasi
 
-UI sudah responsif — di HP tinggal buka URL GitHub Pages-nya, lalu
-**Add to Home Screen** dari browser supaya terasa seperti app.
+Semua alat dirancang agar bekerja 100% di browser. File tidak dikirim ke server, sehingga lebih aman dan tetap bisa dipakai secara offline setelah halaman dimuat.
 
-## Batasan (jujur-jujuran)
+## ⚠️ Catatan penting
 
-- **Buka kunci / proteksi password**: enkripsi PDF tidak didukung `pdf-lib` di browser.
-  Untuk ini pakai `qpdf` di lokal: `qpdf --decrypt terkunci.pdf terbuka.pdf`.
-- **PDF ↔ Word/Excel/PowerPoint**: konversi format Office butuh engine besar
-  (LibreOffice dsb.) — tidak realistis murni client-side.
-- **OCR**: bisa ditambahkan dengan `tesseract.js` kalau nanti dibutuhkan.
+- Kompresi PDF yang agresif dapat mengurangi kualitas teks dan membuatnya tidak lagi bisa dipilih.
+- Fitur yang melibatkan enkripsi PDF atau format Office yang kompleks belum didukung secara native di browser.
+
+## 🤝 Kontribusi
+
+Jika ingin membantu mengembangkan proyek ini, silakan fork repository, buat branch baru, lalu kirim pull request.
+
